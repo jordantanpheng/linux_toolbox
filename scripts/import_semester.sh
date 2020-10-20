@@ -11,6 +11,11 @@ then
   exit
 fi
 
+#Create School Directory if it doesnt exist
+if [ ! -d "School_Directory" ]; then
+    mkdir School_Directory
+fi
+
 #Create the folders according to the semester sheet
 i=0
 while IFS="" read -r p || [ -n "$p" ]
