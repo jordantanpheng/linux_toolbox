@@ -62,7 +62,7 @@ then
   done
   mkdir "School_Directory/$year/$semester/$ue"
   #Update semester.info
-  echo "$year|$semester|$ue||||||||" >> "School_Directory/$year/$semester/$year-$semester.info"
+  #echo "$year|$semester|$ue||||||||" >> "School_Directory/$year/$semester/$year-$semester.info"
 fi
 
 #Add Module
@@ -140,8 +140,9 @@ then
     number=$((1 + `ls School_Directory/$year/$semester/$ue/$module/cm | wc -l`))
     mkdir "School_Directory/$year/$semester/$ue/$module/cm/cm$number"
     #Update semester.info
-    #line=`grep -n "$year|$semester|$ue|$module|" "$year-$semester.info" | awk -F  ":" '{print $1}'`
     sed -i "/^$year|$semester|$ue|$module|/{s/[^|]*/$number/7}" "School_Directory/$year/$semester/$year-$semester.info"
+    #Update semester.conf
+    echo -e "$ue/$module/cm/cm$number/|u:$1|u:$1|u:$1" >> School_Directory/$year/$semester/$year-$semester.conf
   fi
   #Create TD
   if [ $menu_choice -eq 4 ]
@@ -150,6 +151,8 @@ then
     mkdir "School_Directory/$year/$semester/$ue/$module/td/td$number"
     #Update semester.info
     sed -i "/^$year|$semester|$ue|$module|/{s/[^|]*/$number/6}" "School_Directory/$year/$semester/$year-$semester.info"
+    #Update semester.conf
+    echo -e "$ue/$module/td/td$number/|u:$1|u:$1|u:$1" >> School_Directory/$year/$semester/$year-$semester.conf
   fi
   #Create TP
   if [ $menu_choice -eq 5 ]
@@ -158,5 +161,7 @@ then
     mkdir "School_Directory/$year/$semester/$ue/$module/tp/tp$number"
     #Update semester.info
     sed -i "/^$year|$semester|$ue|$module|/{s/[^|]*/$number/5}" "School_Directory/$year/$semester/$year-$semester.info"
+    #Update semester.conf
+    echo -e "$ue/$module/tp/tp$number/|u:$1|u:$1|u:$1" >> School_Directory/$year/$semester/$year-$semester.conf
   fi
 fi

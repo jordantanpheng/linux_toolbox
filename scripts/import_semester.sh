@@ -4,10 +4,10 @@
 #Check if the semester already exists
 first_line=$(head -n 1 $1)
 IFS='|' read -r -a arrFirstLine <<< "$first_line"
-semester="School_Directory/${arrFirstLine[0]}/${arrFirstLine[1]}"
-if [ -d "$semester" ]
+check="School_Directory/${arrFirstLine[0]}/${arrFirstLine[1]}"
+if [ -d "$check" ]
 then
-  echo "$semester: This semester already exists !"
+  echo "$check: This semester already exists !"
   exit
 fi
 
@@ -43,6 +43,7 @@ do
     for j in $(eval echo "{1..${arrLine[4]}}")
     do
       mkdir School_Directory/${arrLine[0]}/${arrLine[1]}/${arrLine[2]}/${arrLine[3]}/tp/tp$j
+      echo -e "${arrLine[2]}/${arrLine[3]}/tp/tp$j/|u:$2|u:$2|u:$2" >> School_Directory/${arrLine[0]}/${arrLine[1]}/${arrLine[0]}-${arrLine[1]}.conf
     done
   fi
   #Create td directory
@@ -52,6 +53,7 @@ do
     for j in $(eval echo "{1..${arrLine[5]}}")
     do
       mkdir School_Directory/${arrLine[0]}/${arrLine[1]}/${arrLine[2]}/${arrLine[3]}/td/td$j
+      echo -e "${arrLine[2]}/${arrLine[3]}/td/td$j/|u:$2|u:$2|u:$2" >> School_Directory/${arrLine[0]}/${arrLine[1]}/${arrLine[0]}-${arrLine[1]}.conf
     done
   fi
   #Create cm directory
@@ -61,6 +63,7 @@ do
     for j in $(eval echo "{1..${arrLine[6]}}")
     do
       mkdir School_Directory/${arrLine[0]}/${arrLine[1]}/${arrLine[2]}/${arrLine[3]}/cm/cm$j
+      echo -e "${arrLine[2]}/${arrLine[3]}/cm/cm$j/|u:$2|u:$2|u:$2" >> School_Directory/${arrLine[0]}/${arrLine[1]}/${arrLine[0]}-${arrLine[1]}.conf
     done
   fi
   let "i++"

@@ -47,20 +47,20 @@ then
     echo "This file does not exist !"
     exit
   fi
-  ./scripts/import_semester.sh $path
+  ./scripts/import_semester.sh $path $username
 fi
 #Create semester sheet
 if [ $menu_choice -eq 2 ]
 then
-  ./scripts/create_semester.sh
+  ./scripts/create_semester.sh $username
 fi
 #Add course
 if [ $menu_choice -eq 3 ]
 then
-  ./scripts/add_course.sh
+  ./scripts/add_course.sh $username
 fi
 #Delete course
 if [ $menu_choice -eq 4 ]
 then
-  ./scripts/delete_course.sh
+  ./scripts/delete_course.sh $username
 fi

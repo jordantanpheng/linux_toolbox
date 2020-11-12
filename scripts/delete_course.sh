@@ -141,6 +141,8 @@ then
     new_number=$(($number - 1))
     #Update semester.info
     sed -i "/^$year|$semester|$ue|$module|/{s/[^|]*/$new_number/7}" "School_Directory/$year/$semester/$year-$semester.info"
+    #Update semester.conf
+    sed -i "/$ue\/$module\/cm\/cm$number/d" "School_Directory/$year/$semester/$year-$semester.conf"
   fi
   #Delete TD
   if [ $menu_choice -eq 4 ]
@@ -149,7 +151,7 @@ then
     rm -rf "School_Directory/$year/$semester/$ue/$module/td/td$number"
     new_number=$(($number - 1))
     #Update semester.info
-    sed -i "/^$year|$semester|$ue|$module|/{s/[^|]*/$new_number/6}" "School_Directory/$year/$semester/$year-$semester.info"
+    sed -i "/$ue\/$module\/td\/td$number/d" "School_Directory/$year/$semester/$year-$semester.conf"
   fi
   #Delete TP
   if [ $menu_choice -eq 5 ]
@@ -158,6 +160,6 @@ then
     rm -rf "School_Directory/$year/$semester/$ue/$module/tp/tp$number"
     new_number=$(($number - 1))
     #Update semester.info
-    sed -i "/^$year|$semester|$ue|$module|/{s/[^|]*/$new_number/5}" "School_Directory/$year/$semester/$year-$semester.info"
+    sed -i "/$ue\/$module\/tp\/tp$number/d" "School_Directory/$year/$semester/$year-$semester.conf"
   fi
 fi
