@@ -9,22 +9,19 @@ cat << EOF
 ######################
 EOF
 
-#Check user type
+#Ask user type
 read -n 1 -r -s user_type
 until [[ ! -z "$user_type" ]] && [[ ! $user_type =~ [^1-3] ]]; do
   echo "Must be a number between 1 and 3 !"
   read -n 1 -r -s user_type
 done
 
-#Check username
-if [ -z $user_type ]
-then
+#Ask username
+read -p 'Username: ' username
+until [[ ! -z "$username" ]]; do
+  echo "Username cannot be empty !"
   read -p 'Username: ' username
-  until [[ ! -z "$username" ]]; do
-    echo "Username cannot be empty !"
-    read -p 'Username: ' username
-  done
-fi
+done
 
 #Menu choices
 cat << EOF
