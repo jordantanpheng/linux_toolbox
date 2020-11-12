@@ -25,13 +25,15 @@ done
 
 #Menu choices
 cat << EOF
-########################
-#  Choose an action :  #
-#  1) Import semester  #
-#  2) Create semester  #
-#  3) Add course       #
-#  4) Delete course    #
-########################
+########################################
+#  Choose an action :                  #
+#  1) Import semester                  #
+#  2) Create semester                  #
+#  3) Add course                       #
+#  4) Delete course                    #
+#  5) Add user/group to a course       #
+#  6) Delete user/group from a course  #
+########################################
 EOF
 read -n 1 -r -s menu_choice
 until [[ ! -z "$menu_choice" ]] && [[ ! $menu_choice =~ [^1-4] ]]; do
@@ -63,4 +65,14 @@ fi
 if [ $menu_choice -eq 4 ]
 then
   ./scripts/delete_course.sh $username
+fi
+#Add user to a course
+if [ $menu_choice -eq 5 ]
+then
+  ./scripts/add_user_to_course.sh
+fi
+#Delete user from a course
+if [ $menu_choice -eq 6 ]
+then
+  ./scripts/delete_user_from_course.sh
 fi
