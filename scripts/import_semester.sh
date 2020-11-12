@@ -12,7 +12,8 @@ then
 fi
 
 #Create School Directory if it doesnt exist
-if [ ! -d "School_Directory" ]; then
+if [ ! -d "School_Directory" ]
+then
     mkdir School_Directory
 fi
 
@@ -26,6 +27,7 @@ do
   then
     mkdir School_Directory/${arrLine[0]}
     mkdir School_Directory/${arrLine[0]}/${arrLine[1]}
+    cp $1 School_Directory/${arrLine[0]}/${arrLine[1]}
   fi
   #Create UE if it doesn't exist
   if ! [ -d "School_Directory/${arrLine[0]}/${arrLine[1]}/${arrLine[2]}" ]
