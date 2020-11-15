@@ -36,8 +36,8 @@ cat << EOF
 ########################################
 EOF
 read -n 1 -r -s menu_choice
-until [[ ! -z "$menu_choice" ]] && [[ ! $menu_choice =~ [^1-4] ]]; do
-  echo "Must be a number between 1 and 4 !"
+until [[ ! -z "$menu_choice" ]] && [[ ! $menu_choice =~ [^1-6] ]]; do
+  echo "Must be a number between 1 and 6 !"
   read -n 1 -r -s menu_choice
 done
 #Import semester sheet
@@ -50,29 +50,24 @@ then
     exit
   fi
   ./scripts/import_semester.sh $path $username
-fi
 #Create semester sheet
-if [ $menu_choice -eq 2 ]
+elif [ $menu_choice -eq 2 ]
 then
   ./scripts/create_semester.sh $username
-fi
 #Add course
-if [ $menu_choice -eq 3 ]
+elif [ $menu_choice -eq 3 ]
 then
   ./scripts/add_course.sh $username
-fi
 #Delete course
-if [ $menu_choice -eq 4 ]
+elif [ $menu_choice -eq 4 ]
 then
   ./scripts/delete_course.sh $username
-fi
 #Add user to a course
-if [ $menu_choice -eq 5 ]
+elif [ $menu_choice -eq 5 ]
 then
   ./scripts/add_user_to_course.sh
-fi
 #Delete user from a course
-if [ $menu_choice -eq 6 ]
+elif [ $menu_choice -eq 6 ]
 then
-  ./scripts/delete_user_from_course.sh
+  ./scripts/remove_user_from_course.sh
 fi

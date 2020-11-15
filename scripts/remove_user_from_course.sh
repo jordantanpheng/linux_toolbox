@@ -1,5 +1,5 @@
 #!/bin/bash
-#Add user to course script
+#Delete user from course script
 
 #Check if School_Directory exists
 if [ ! -d "School_Directory" ]
@@ -16,13 +16,13 @@ then
   exit
 fi
 
-#Choose to give rights to a user or a group
+#Choose to remove rights from a user or a group
 cat << EOF
-#######################################
-#  Give rights to a user or a group:  #
-#  1) User                            #
-#  2) Group                           #
-#######################################
+###########################################
+#  Remove rights from a user or a group:  #
+#  1) User                                #
+#  2) Group                               #
+###########################################
 EOF
 read -n 1 -r -s menu_choice
 until [[ ! -z "$menu_choice" ]] && [[ ! $menu_choice =~ [^1-2] ]]; do
@@ -37,11 +37,11 @@ then
   target="g"
 fi
 
-#Ask the name of the user/group to give rights to
-read -p 'Write the name of the user/group you want to give rights: ' user
+#Ask the name of the user/group to remove rights from
+read -p 'Write the name of the user/group you want to remove rights: ' user
 until [[ ! -z "$user" ]]; do
   echo "The name of the user/group cannot be empty !"
-  read -p 'Write the name of the user/group you want to give rights: ' user
+  read -p 'Write the name of the user/group you want to remove rights: ' user
 done
 
 #Select year of the semester
@@ -94,46 +94,52 @@ until [[ ! -z "$course" ]] && [[ -d "School_Directory/$year/$semester/$ue/$modul
   read -p 'Write the name of the course: ' course
 done
 
-#Ask the user which rights to attribute
-new_rights=true
+#Ask the user which rights to remove
+remove_rights=true
 #Menu choices
-until [[ $new_rights == false ]]; do
+until [[ $remove_rights == false ]]; do
 cat << EOF
-##############################
-#  Rights you want to give:  #
-#  1) Read                   #
-#  2) Write                  #
-#  3) Execute                #
-##############################
+################################
+#  Rights you want to remove:  #
+#  1) Read                     #
+#  2) Write                    #
+#  3) Execute                  #
+################################
 EOF
   read -n 1 -r -s rights
   until [[ ! -z "$rights" ]] && [[ ! $rights =~ [^1-3] ]]; do
     echo "Must be a number between 1 and 3 !"
     read -n 1 -r -s rights
   done
-  #Add read rights
+  #Remove read rights
   if [ $rights -eq 1 ]
   then
     old_rights=`grep "$ue/$module/$course_folder/$course" "School_Directory/$year/$semester/$year-$semester.conf" | cut -d '|' -f2`
-    add_new_rights="$old_rights,$target:$user"
-    sed -i "/^$ue\/$module\/$course_folder\/$course\//{s/[^|]*/$add_new_rights/2}" "School_Directory/$year/$semester/$year-$semester.conf"
-  #Add write rights
+    #Remove 2 times in case there is a comma
+    remove_old_rights=${old_rights//,$target:$user/}
+    remove_old_rights=${old_rights//$target:$user/}
+    sed -i "/^$ue\/$module\/$course_folder\/$course\//{s/[^|]*/$remove_old_rights/2}" "School_Directory/$year/$semester/$year-$semester.conf"
+  #Remove write rights
   elif [ $rights -eq 2 ]
   then
     old_rights=`grep "$ue/$module/$course_folder/$course" "School_Directory/$year/$semester/$year-$semester.conf" | cut -d '|' -f3`
-    add_new_rights="$old_rights,$target:$user"
-    sed -i "/^$ue\/$module\/$course_folder\/$course\//{s/[^|]*/$add_new_rights/3}" "School_Directory/$year/$semester/$year-$semester.conf"
-  #Add execute rights
+    #Remove 2 times in case there is a comma
+    remove_old_rights=${old_rights//,$target:$user/}
+    remove_old_rights=${old_rights//$target:$user/}
+    sed -i "/^$ue\/$module\/$course_folder\/$course\//{s/[^|]*/$remove_old_rights/3}" "School_Directory/$year/$semester/$year-$semester.conf"
+  #Remove execute rights
   elif [ $rights -eq 3 ]
   then
     old_rights=`grep "$ue/$module/$course_folder/$course" "School_Directory/$year/$semester/$year-$semester.conf" | cut -d '|' -f4`
-    add_new_rights="$old_rights,$target:$user"
-    sed -i "/^$ue\/$module\/$course_folder\/$course\//{s/[^|]*/$add_new_rights/4}" "School_Directory/$year/$semester/$year-$semester.conf"
+    #Remove 2 times in case there is a comma
+    remove_old_rights=${old_rights//,$target:$user/}
+    remove_old_rights=${old_rights//$target:$user/}
+    sed -i "/^$ue\/$module\/$course_folder\/$course\//{s/[^|]*/$remove_old_rights/4}" "School_Directory/$year/$semester/$year-$semester.conf"
   fi
-  read -p "Do you want to add other rights ? (y/n)" -n 1 -r
+  read -p "Do you want to remove other rights ? (y/n)" -n 1 -r
   echo
   if [[ ! $REPLY =~ ^[Yy]$ ]]
   then
-    new_rights=false
+    remove_rights=false
   fi
 done

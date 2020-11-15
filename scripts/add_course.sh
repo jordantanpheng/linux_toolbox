@@ -28,11 +28,7 @@ cat << EOF
 ##############################
 EOF
 read -n 1 -r -s menu_choice
-until [[ ! -z "$menu_choice" ]]; do
-  echo "Must be a number between 1 and 5 !"
-  read -n 1 -r -s menu_choice
-done
-until [[ ! $menu_choice =~ [^1-5] ]]; do
+until [[ ! -z "$menu_choice" ]] && [[ ! $menu_choice =~ [^1-5] ]]; do
   echo "Must be a number between 1 and 5 !"
   read -n 1 -r -s menu_choice
 done
@@ -143,9 +139,8 @@ then
     sed -i "/^$year|$semester|$ue|$module|/{s/[^|]*/$number/7}" "School_Directory/$year/$semester/$year-$semester.info"
     #Update semester.conf
     echo -e "$ue/$module/cm/cm$number/|u:$1|u:$1|u:$1" >> School_Directory/$year/$semester/$year-$semester.conf
-  fi
   #Create TD
-  if [ $menu_choice -eq 4 ]
+  elif [ $menu_choice -eq 4 ]
   then
     number=$((1 + `ls School_Directory/$year/$semester/$ue/$module/td | wc -l`))
     mkdir "School_Directory/$year/$semester/$ue/$module/td/td$number"
@@ -153,9 +148,8 @@ then
     sed -i "/^$year|$semester|$ue|$module|/{s/[^|]*/$number/6}" "School_Directory/$year/$semester/$year-$semester.info"
     #Update semester.conf
     echo -e "$ue/$module/td/td$number/|u:$1|u:$1|u:$1" >> School_Directory/$year/$semester/$year-$semester.conf
-  fi
   #Create TP
-  if [ $menu_choice -eq 5 ]
+  elif [ $menu_choice -eq 5 ]
   then
     number=$((1 + `ls School_Directory/$year/$semester/$ue/$module/tp | wc -l`))
     mkdir "School_Directory/$year/$semester/$ue/$module/tp/tp$number"

@@ -28,11 +28,7 @@ cat << EOF
 #################################
 EOF
 read -n 1 -r -s menu_choice
-until [[ ! -z "$menu_choice" ]]; do
-  echo "Must be a number between 1 and 5 !"
-  read -n 1 -r -s menu_choice
-done
-until [[ ! $menu_choice =~ [^1-5] ]]; do
+until [[ ! -z "$menu_choice" ]] && [[ ! $menu_choice =~ [^1-5] ]]; do
   echo "Must be a number between 1 and 5 !"
   read -n 1 -r -s menu_choice
 done
@@ -64,10 +60,9 @@ then
   rm -rf "School_Directory/$year/$semester/$ue"
   #Update semester.info
   sed -i "/$year|$semester|$ue|/d" "School_Directory/$year/$semester/$year-$semester.info"
-fi
 
 #Delete module
-if [ $menu_choice -eq 2 ]
+elif [ $menu_choice -eq 2 ]
 then
   #Select year of the semester
   ls -A "School_Directory"
@@ -100,10 +95,9 @@ then
   rm -rf "School_Directory/$year/$semester/$ue/$module"
   #Update semester.info
   sed -i "/$year|$semester|$ue|$module|/d" "School_Directory/$year/$semester/$year-$semester.info"
-fi
 
 #Delete CM/TD/TP
-if  (($menu_choice >= 3 && $menu_choice <=5))
+elif  (($menu_choice >= 3 && $menu_choice <=5))
 then
   #Select year of the semester
   ls -A "School_Directory"
@@ -143,18 +137,16 @@ then
     sed -i "/^$year|$semester|$ue|$module|/{s/[^|]*/$new_number/7}" "School_Directory/$year/$semester/$year-$semester.info"
     #Update semester.conf
     sed -i "/$ue\/$module\/cm\/cm$number/d" "School_Directory/$year/$semester/$year-$semester.conf"
-  fi
   #Delete TD
-  if [ $menu_choice -eq 4 ]
+  elif [ $menu_choice -eq 4 ]
   then
     number=`ls School_Directory/$year/$semester/$ue/$module/td | wc -l`
     rm -rf "School_Directory/$year/$semester/$ue/$module/td/td$number"
     new_number=$(($number - 1))
     #Update semester.info
     sed -i "/$ue\/$module\/td\/td$number/d" "School_Directory/$year/$semester/$year-$semester.conf"
-  fi
   #Delete TP
-  if [ $menu_choice -eq 5 ]
+  elif [ $menu_choice -eq 5 ]
   then
     number=`ls School_Directory/$year/$semester/$ue/$module/tp | wc -l`
     rm -rf "School_Directory/$year/$semester/$ue/$module/tp/tp$number"
