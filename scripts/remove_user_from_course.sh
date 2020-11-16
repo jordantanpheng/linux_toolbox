@@ -72,7 +72,6 @@ until [[ ! -z "$module" ]] && [[ -d "School_Directory/$year/$semester/$ue/$modul
   echo "This module does not exists !"
   read -p 'Write the name of the module: ' module
 done
-
 #Select course folder (CM/TD/TP)
 ls -A "School_Directory/$year/$semester/$ue/$module"
 read -p 'Choose between a CM/TD/TP: ' course_folder
@@ -80,7 +79,6 @@ until [[ ! -z "$course_folder" ]] && [[ -d "School_Directory/$year/$semester/$ue
   echo "This folder does not exists !"
   read -p 'Choose between a CM/TD/TP: ' course_folder
 done
-
 #Select course
 if [ ! "$(ls -A "School_Directory/$year/$semester/$ue/$module/$course_folder")" ]
 then
