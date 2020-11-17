@@ -79,5 +79,5 @@ then
 #Edit devoir progression
 elif [ $menu_choice -eq 8 ]
 then
-  ./scripts/edit_devoir_progression.sh
+  ./scripts/edit_devoir_progression.sh $username
 fi

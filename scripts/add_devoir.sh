@@ -86,7 +86,7 @@ mkdir "School_Directory/$year/$semester/$ue/$module/$course_folder/$course/$devo
 old_devoir_field=`grep "$year|$semester|$ue|$module" "School_Directory/$year/$semester/$year-$semester.info" | cut -d '|' -f11`
 #Escape old_devoir_field
 old_devoir_field=${old_devoir_field////\\/}
-new_devoir_field="$old_devoir_field$course\/$devoir_name,"
+new_devoir_field="$old_devoir_field$course\/$devoir_name:$devoir_progression,"
 sed -i "/^$year|$semester|$ue|$module/{s/[^|]*/$new_devoir_field/11}" "School_Directory/$year/$semester/$year-$semester.info"
 #Update semester.conf
 echo -e "$ue/$module/$course_folder/$course/$devoir_name|u:$1|u:$1|u:$1" >> School_Directory/$year/$semester/$year-$semester.conf
