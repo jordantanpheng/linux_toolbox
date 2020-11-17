@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Select user type
+#Ask user type
 cat << EOF
 ######################
 # Select user type:  #
@@ -8,11 +8,9 @@ cat << EOF
 # 2) Student/Teacher #
 ######################
 EOF
-
-#Ask user type
 read -n 1 -r -s user_type
-until [[ ! -z "$user_type" ]] && [[ ! $user_type =~ [^1-3] ]]; do
-  echo "Must be a number between 1 and 3 !"
+until [[ ! -z "$user_type" ]] && [[ ! $user_type =~ [^1-2] ]]; do
+  echo "Must be a number between 1 and 2 !"
   read -n 1 -r -s user_type
 done
 
@@ -25,23 +23,24 @@ done
 
 #Menu choices
 cat << EOF
-########################################
-#  Choose an action :                  #
-#  1) Import semester                  #
-#  2) Create semester                  #
-#  3) Add course                       #
-#  4) Delete course                    #
-#  5) Add user/group to a course       #
-#  6) Delete user/group from a course  #
-#  7) Add a devoir                     #
-#  8) Edit devoir progression          #
-#  9) Grade a devoir                   #
-########################################
+###########################################
+#  Choose an action :                     #
+#  1) Import semester                     #
+#  2) Create semester                     #
+#  3) Add course                          #
+#  4) Delete course                       #
+#  5) Add user/group to a course          #
+#  6) Delete user/group from a course     #
+#  7) Add a devoir                        #
+#  8) Edit devoir progression             #
+#  9) Grade a devoir                      #
+#  10) Visualize my work progress/grades  #
+###########################################
 EOF
-read -n 1 -r -s menu_choice
-until [[ ! -z "$menu_choice" ]] && [[ ! $menu_choice =~ [^1-9] ]]; do
-  echo "Must be a number between 1 and 9 !"
-  read -n 1 -r -s menu_choice
+read menu_choice
+until [[ ! -z "$menu_choice" ]] && [[ "$menu_choice" -ge 1 ]] && [[ "$menu_choice" -le 10 ]]; do
+  echo "Must be a number between 1 and 10 !"
+  read menu_choice
 done
 #Import semester sheet
 if [ $menu_choice -eq 1 ]
@@ -85,4 +84,8 @@ then
 elif [ $menu_choice -eq 9 ]
 then
   ./scripts/grade_devoir.sh
+#Visualize work progress/grade
+elif [ $menu_choice -eq 10 ]
+then
+  ./scripts/visualize_work.sh $username
 fi
