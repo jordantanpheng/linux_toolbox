@@ -35,11 +35,12 @@ cat << EOF
 #  6) Delete user/group from a course  #
 #  7) Add a devoir                     #
 #  8) Edit devoir progression          #
+#  9) Grade a devoir                   #
 ########################################
 EOF
 read -n 1 -r -s menu_choice
-until [[ ! -z "$menu_choice" ]] && [[ ! $menu_choice =~ [^1-8] ]]; do
-  echo "Must be a number between 1 and 8 !"
+until [[ ! -z "$menu_choice" ]] && [[ ! $menu_choice =~ [^1-9] ]]; do
+  echo "Must be a number between 1 and 9 !"
   read -n 1 -r -s menu_choice
 done
 #Import semester sheet
@@ -80,4 +81,8 @@ then
 elif [ $menu_choice -eq 8 ]
 then
   ./scripts/edit_devoir_progression.sh $username
+#Grade devoir
+elif [ $menu_choice -eq 9 ]
+then
+  ./scripts/grade_devoir.sh
 fi
