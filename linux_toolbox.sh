@@ -35,11 +35,13 @@ cat << EOF
 #  8) Edit devoir progression             #
 #  9) Grade a devoir                      #
 #  10) Visualize my work progress/grades  #
+#  11) Write down a question/remark       #
+#  12) Visualize questions/remarks        #
 ###########################################
 EOF
 read menu_choice
-until [[ ! -z "$menu_choice" ]] && [[ "$menu_choice" -ge 1 ]] && [[ "$menu_choice" -le 10 ]]; do
-  echo "Must be a number between 1 and 10 !"
+until [[ ! -z "$menu_choice" ]] && [[ "$menu_choice" -ge 1 ]] && [[ "$menu_choice" -le 12 ]]; do
+  echo "Must be a number between 1 and 12 !"
   read menu_choice
 done
 #Import semester sheet
@@ -88,4 +90,12 @@ then
 elif [ $menu_choice -eq 10 ]
 then
   ./scripts/visualize_work.sh $username
+#Write down questions/remarks
+elif [ $menu_choice -eq 11 ]
+then
+  ./scripts/write_down_qr.sh
+#Visualize questions/remarks
+elif [ $menu_choice -eq 12 ]
+then
+  ./scripts/visualize_qr.sh
 fi
