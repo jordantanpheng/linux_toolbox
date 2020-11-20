@@ -1,7 +1,6 @@
 #!/bin/bash
 #Create semester sheet script
 
-ls -A "School_Directory/"
 read -p 'Year: ' year
 until [[ ! -z "$year" ]]; do
   echo "Year cannot be empty !"
@@ -95,7 +94,7 @@ until [ $semester_creation == false ]; do
   read -p 'Coefficient of tp (<1): ' coefficient_tp
   read -p 'Coefficient of td (<1): ' coefficient_td
   read -p 'Coefficient of cm (<1): ' coefficient_cm
-  echo -e "$year|$semester|$ue|$module|$tp|$td|$cm|$coefficient|$teachers|$coefficient_tp|$coefficient_td|$coefficient_cm|" >> $semester_sheet
+  echo -e "$year|$semester|$ue|$module|$tp|$td|$cm|$coefficient|$teachers|tp:$coefficient_tp,td:$coefficient_td,cm:$coefficient_cm|" >> $semester_sheet
   read -p "Do you want to create another ue/module ? (y/n)" -n 1 -r
   echo
   if [[ ! $REPLY =~ ^[Yy]$ ]]
